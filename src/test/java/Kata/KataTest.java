@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -116,6 +117,19 @@ public class KataTest {
     void testPrintTimeLinePostsEmpty() {
         boolean actual = testKata.printTimeLine(new ArrayList<>());
         assertFalse(actual);
+    }
+
+    @Test
+    void testGetDateDifference() {
+        long actual = Kata.getDateDifference(new Date(), user1.Posts.get(0).PostedDate, TimeUnit.MINUTES);
+        assertNotEquals(-1, actual);
+        assertNotEquals(-1 * actual, actual);
+    }
+
+    @Test
+    void testGetDateDifferenceNull() {
+        long actual = Kata.getDateDifference(null, user1.Posts.get(0).PostedDate, TimeUnit.MINUTES);
+        assertEquals(-1, actual);
     }
 
     @Test
