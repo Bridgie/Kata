@@ -61,6 +61,64 @@ public class KataTest {
     }
 
     @Test
+    void testViewUserTimeline() {
+        boolean actual = testKata.viewUserTimeline(user1);
+        assertTrue(actual);
+    }
+
+    @Test
+    void testViewUserTimelineUserNull() {
+        boolean actual = testKata.viewUserTimeline(null);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testViewUserTimelineUserPostsNull() {
+        User testUser = new User(null, null, "");
+        boolean actual = testKata.viewUserTimeline(testUser);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testViewUserTimelineUserPostsEmpty() {
+        User testUser = new User(null, new ArrayList<>(), "");
+        boolean actual = testKata.viewUserTimeline(testUser);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testViewCurrentUserTimeLine() {
+        Post testPost = new Post(currentUser, new Date(), "test");
+        currentUser.Posts.add(testPost);
+        boolean actual = testKata.viewCurrentUserTimeLine();
+        assertTrue(actual);
+    }
+
+    @Test
+    void testViewCurrentUserTimeLineEmpty() {
+        boolean actual = testKata.viewCurrentUserTimeLine();
+        assertFalse(actual);
+    }
+
+    @Test
+    void testPrintTimeLine() {
+        boolean actual = testKata.printTimeLine(user1.Posts);
+        assertTrue(actual);
+    }
+
+    @Test
+    void testPrintTimeLinePostsNull() {
+        boolean actual = testKata.printTimeLine(null);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testPrintTimeLinePostsEmpty() {
+        boolean actual = testKata.printTimeLine(new ArrayList<>());
+        assertFalse(actual);
+    }
+
+    @Test
     void testSearchFound() {
         User actual = testKata.search("bob");
         assertNotNull(actual);
