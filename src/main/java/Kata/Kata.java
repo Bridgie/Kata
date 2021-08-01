@@ -4,6 +4,7 @@ import Kata.Classes.Post;
 import Kata.Classes.User;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Kata {
     private final ArrayList<User> Users;
@@ -44,7 +45,26 @@ public class Kata {
         return true;
     }
     public boolean printTimeLine(ArrayList<Post> posts) {
+        if (posts == null || posts.isEmpty()){
+            return false;
+        }
+        for (Post post:
+                posts) {
+            long minutesAgo = getDateDifference(new Date(), post.PostedDate, TimeUnit.MINUTES);
+            if (minutesAgo == -1 || post.Author == null|| post.Author.UserName == null ||
+                    post.Author.UserName.isEmpty() ||
+                    post.PostDetail == null || post.PostDetail.isEmpty()) {
+                continue;
+            }
+            String timelinePost = post.Author.UserName + " - " + post.PostDetail +
+                    " (" + minutesAgo + " minutes ago)";
+            System.out.println(timelinePost);
+        }
         return true;
+    }
+
+    public static long getDateDifference(Date date1, Date date2, TimeUnit timeUnit) {
+        return 0;
     }
     public User search(String username) {
         if (username == null || username.isEmpty()){
