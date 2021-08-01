@@ -3,8 +3,7 @@ package Kata;
 import Kata.Classes.Post;
 import Kata.Classes.User;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Kata {
     private final ArrayList<User> Users;
@@ -30,6 +29,12 @@ public class Kata {
 
     }
     public boolean publish(String post) {
+        if (post == null || post.isEmpty()) {
+            System.out.println("unable to publish empty post...");
+            return false;
+        }
+        Post postToAdd = new Post(this.CurrentUser, new Date(), post);
+        this.CurrentUser.Posts.add(postToAdd);
         return true;
     }
     public boolean viewUserTimeline(User user) {
@@ -42,9 +47,26 @@ public class Kata {
         return true;
     }
     public User search(String username) {
+        if (username == null || username.isEmpty()){
+            System.out.println("username cannot be empty...");
+            return null;
+        }
+        for (User user:
+                Users) {
+            if (Objects.equals(user.UserName.toLowerCase(Locale.ROOT), username)) {
+                return user;
+            }
+        }
+        System.out.println("User " + username +" could not be found...");
         return null;
     }
     public boolean follow(User user) {
+        if (user == null || user.UserName == null || user.UserName.isEmpty()) return false;
+        if(this.CurrentUser.Followers.contains(user)) {
+            System.out.println("You are already following this user");
+            return false;
+        }
+        this.CurrentUser.Followers.add(user);
         return true;
     }
 }
