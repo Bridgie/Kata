@@ -25,4 +25,37 @@ public class KataClassesTest {
         assertNotNull(post.PostedDate);
         assertEquals("test", post.PostDetail);
     }
+
+    @Test
+    void testPostComparatorBefore() {
+        User user1 = new User(new ArrayList<>(), new ArrayList<>(), "test1");
+        Post post1 = new Post(user1, new Date(), "test1");
+
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "test2");
+        Post post2 = new Post(user2, new Date(new Date().getTime() - 10000), "test2");
+
+        assertEquals(-1,post1.compareTo(post2));
+    }
+
+    @Test
+    void testPostComparatorAfter() {
+        User user1 = new User(new ArrayList<>(), new ArrayList<>(), "test1");
+        Post post1 = new Post(user1, new Date(new Date().getTime() - 10000), "test1");
+
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "test2");
+        Post post2 = new Post(user2, new Date(), "test2");
+
+        assertEquals(1,post1.compareTo(post2));
+    }
+
+    @Test
+    void testPostComparatorEquals() {
+        User user1 = new User(new ArrayList<>(), new ArrayList<>(), "test1");
+        Post post1 = new Post(user1, new Date(), "test1");
+
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "test2");
+        Post post2 = new Post(user2, new Date(), "test2");
+
+        assertEquals(0,post1.compareTo(post2));
+    }
 }
