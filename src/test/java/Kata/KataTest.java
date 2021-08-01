@@ -41,6 +41,7 @@ public class KataTest {
 
         testKata = new Kata(users, currentUser);
     }
+
     @Test
     void testPublish() {
         String post = "I love the weather today";

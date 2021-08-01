@@ -17,19 +17,20 @@ public class Kata {
         CurrentUser = currentUser;
         scanner = new Scanner(System.in).useDelimiter("\\n");
     }
+
     public static void main(String[] args) {
         ArrayList<User> users = new ArrayList<>(10);
         User currentUser = new User(new ArrayList<>(10), new  ArrayList<>(10), "Alice");
 
-        InitUserData(users);
+        initUserData(users);
         Kata kata = new Kata(users, currentUser);
 
         System.out.println("Hello, Welcome to your timeline " + kata.CurrentUser.UserName);
         kata.viewCurrentUserTimeLine();
-        kata.StartAction();
+        kata.startAction();
     }
 
-    public static void InitUserData(ArrayList<User> users) {
+    public static void initUserData(ArrayList<User> users) {
         if (users == null) return;
         User user1 = new User(new ArrayList<>(10), new  ArrayList<>(10), "Bob");
         User user2 = new User(new ArrayList<>(10), new  ArrayList<>(10), "Charlie");
@@ -46,12 +47,61 @@ public class Kata {
         users.add(user2);
     }
 
-    public void StartAction() {
-
+    public void startAction() {
+        System.out.println("Please select your next action, " + this.CurrentUser.UserName);
+        System.out.println("1) View timeline");
+        System.out.println("2) Publish post");
+        System.out.println("3) Search for a user to follow");
+        System.out.println("4) Quit");
+        int input = scanner.nextInt();
+        String consoleInput;
+        if (input == 1) {
+            if(!viewCurrentUserTimeLine()) {
+                System.out.println("There are no posts in your timeline");
+            }
+        }
+        else if (input == 2) {
+            System.out.println("Please input your post, " + this.CurrentUser.UserName);
+            consoleInput = scanner.next();
+            if(publish(consoleInput)) {
+                if(!viewCurrentUserTimeLine()) {
+                    System.out.println("There are no posts in your timeline");
+                }
+            }
+        } else if (input == 3) {
+            searchAndFollow();
+        } else if (input == 4) {
+            System.exit(0);
+        }
+        startAction();
     }
 
     public void searchAndFollow() {
+        System.out.println("Please input your search, " + this.CurrentUser.UserName);
+        String consoleInput = scanner.next().toLowerCase(Locale.ROOT);
 
+        User foundUser = search(consoleInput);
+        if (foundUser == null) {
+            searchAndFollow();
+        }
+        System.out.println("User found: " + foundUser.UserName);
+        System.out.println("Would you like to see users timeline? Y/N");
+        consoleInput = scanner.next().toLowerCase(Locale.ROOT);
+        if (Objects.equals(consoleInput, "y")) {
+            if(!viewUserTimeline(foundUser)){
+                System.out.println("There are no posts in user timeline");
+            }
+        }
+
+        System.out.println("Would you like to follow? Y/N");
+        consoleInput = scanner.next().toLowerCase(Locale.ROOT);
+        if (Objects.equals(consoleInput, "y")) {
+            if (follow(foundUser)) {
+                System.out.println("Successfully followed user");
+            } else {
+                System.out.println("Could not follow user");
+            }
+        }
     }
 
     public boolean publish(String post) {
@@ -122,6 +172,7 @@ public class Kata {
         System.out.println("User " + username +" could not be found...");
         return null;
     }
+
     public boolean follow(User user) {
         if (user == null || user.UserName == null || user.UserName.isEmpty()) return false;
         if(this.CurrentUser.Followers.contains(user)) {
