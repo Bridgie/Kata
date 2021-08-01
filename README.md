@@ -61,4 +61,4 @@ Alternatively you can view someone elses timeline by searching for that user fir
 You can follow another user by searching for them using their username and if they exist then the application will ask if you would like to view their timeline, if you accept/decline then you will be asked if you would like to follow them. After following, if you view your timeline you should see both yours and that users posts.
 
 ## Thanks!
-For reading and enjoy, let me know if there are any questions or I missed something.
+For reading and enjoy, let me know if there are any questions or if I missed something.
