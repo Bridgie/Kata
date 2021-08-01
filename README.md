@@ -4,11 +4,7 @@ This project is built using openjdk-16. Built using TDD and Simple Design princi
 
 ## How to build
 
-Ideally it is easier to build this project using the Jetbrains IntelliJ IDE. If you open up the project in the IDE the run configurations should be configured automatically.
-* You can run the Kata.main.jar configuration of the project
-* You can run the Application configuration that will build and run Kata.main
-
-If there are no configurations when you open the project then follow the below instructions to add
+Ideally it is easier to build this project using the Jetbrains IntelliJ IDEA.
 
 Jetbrains IntelliJ IDE:
 
