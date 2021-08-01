@@ -1,6 +1,6 @@
 # Kata
 
-This project is built using openjfk-16. Built using TDD and Simple Design principles in Java.
+This project is built using openjdk-16. Built using TDD and Simple Design principles in Java.
 
 ## How to build
 
