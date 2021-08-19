@@ -195,4 +195,12 @@ public class Kata {
         }
         return false;
     }
+
+    public boolean block(User user) {
+        return unfollow(user);
+    }
+
+    public void addUser(User user) {
+        this.Users.add(user);
+    }
 }

@@ -68,6 +68,7 @@ Feature: Unfollow
 		And Alice can see Bob's message on her wall.
 	When Alice unfollows Bob,
 	Then Alice should not see Bob's message on her wall anymore.
+
 Feature: Block
 	Scenario: Alice blocks bob.
 	Given Alice has followed Bob,
@@ -79,3 +80,4 @@ Feature: Block
 		And Alice can no longer see Bob's posts, 
 		And Bob can not follow Alice again.
 
+??? should this include search?

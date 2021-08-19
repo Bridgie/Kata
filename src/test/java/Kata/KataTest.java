@@ -25,8 +25,8 @@ public class KataTest {
         users = new ArrayList<>(10);
         currentUser = new User(new ArrayList<>(10), new ArrayList<>(10), "Alice");
 
-        user1 = new User(new ArrayList<>(10), new  ArrayList<>(10), "Bob");
-        user2 = new User(new ArrayList<>(10), new  ArrayList<>(10), "Charlie");
+        user1 = new User(new ArrayList<>(10), new ArrayList<>(10), "Bob");
+        user2 = new User(new ArrayList<>(10), new ArrayList<>(10), "Charlie");
 
 
         Post post1 = new Post(user1, new Date(new Date().getTime() - 100000), "Darn! We lost!");
@@ -243,4 +243,48 @@ public class KataTest {
         timelinePosts = testKata.currentUserTimeLinePosts();
         assertFalse(timelinePosts.contains(testPost));
     }
+
+    @Test
+    void blockingUserAlsoUnfollowsUser() {
+        var blockedUser = new User(null, null, "test user jacob");
+
+        boolean followResult = testKata.follow(blockedUser);
+        assertTrue(followResult);
+        assertTrue(currentUser.Followers.contains(blockedUser));
+
+        boolean blockResult = testKata.block(blockedUser);
+        assertTrue(blockResult);
+        assertFalse(currentUser.Followers.contains(blockedUser));
+    }
+
+    @Test
+    void blockingUserNoLongerShowsUserInSearch() {
+        var blockUser = new User(null, null, "test user jacob's clone");
+        testKata.addUser(blockUser);
+        testKata.block(blockUser);
+
+        var searchResult = testKata.search(blockUser.UserName);
+        assertNull(searchResult);
+    }
+
+    @Test
+    void addUserShouldNotAllowNullUser() {
+
+    }
+
+    @Test
+    void addUserShouldNotAllowNullUsername() {
+
+    }
+
+    @Test
+    void addUserShouldNotAllowEmptyUsername() {
+
+    }
+
+    @Test
+    void blockingUserNotBeingFollowedWillDoSomething() {
+
+    }
+
 }
