@@ -269,17 +269,34 @@ public class KataTest {
 
     @Test
     void addUserShouldNotAllowNullUser() {
-
+        User testUser = null;
+        testKata.addUser(testUser);
+        ArrayList<User> users = testKata.getUsers();
+        assertFalse(users.contains(testUser));
     }
 
     @Test
     void addUserShouldNotAllowNullUsername() {
-
+        User testUser = new User(null, null, null);
+        testKata.addUser(testUser);
+        ArrayList<User> users = testKata.getUsers();
+        assertFalse(users.contains(testUser));
     }
 
     @Test
     void addUserShouldNotAllowEmptyUsername() {
-
+        User testUser = new User(null, null, "");
+        testKata.addUser(testUser);
+        ArrayList<User> users = testKata.getUsers();
+        assertFalse(users.contains(testUser));
+    }
+    
+    @Test
+    void addUserActuallyAddsUser() {
+        User testUser = new User(null, null, "Test");
+        testKata.addUser(testUser);
+        ArrayList<User> users = testKata.getUsers();
+        assertTrue(users.contains(testUser));
     }
 
     @Test

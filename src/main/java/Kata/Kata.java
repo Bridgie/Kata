@@ -170,7 +170,8 @@ public class Kata {
         }
         for (User user:
                 Users) {
-            if (Objects.equals(user.UserName.toLowerCase(Locale.ROOT), username)) {
+            if ( !this.CurrentUser.Blocked.contains(username) &&
+                    Objects.equals(user.UserName.toLowerCase(Locale.ROOT), username)) {
                 return user;
             }
         }
@@ -178,8 +179,12 @@ public class Kata {
         return null;
     }
 
+    public boolean isUserNullOrEmpty(User user) {
+        return user == null || user.UserName == null || user.UserName.isEmpty();
+    }
+
     public boolean follow(User user) {
-        if (user == null || user.UserName == null || user.UserName.isEmpty()) return false;
+        if (isUserNullOrEmpty(user)) return false;
         if(this.CurrentUser.Followers.contains(user)) {
             System.out.println("You are already following this user");
             return false;
@@ -197,10 +202,16 @@ public class Kata {
     }
 
     public boolean block(User user) {
+        this.CurrentUser.Blocked.add(user.UserName);
         return unfollow(user);
     }
 
     public void addUser(User user) {
+        if(isUserNullOrEmpty(user)) return;
         this.Users.add(user);
+    }
+
+    public ArrayList<User> getUsers() {
+        return this.Users;
     }
 }
