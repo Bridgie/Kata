@@ -5,6 +5,7 @@ import Kata.Classes.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -195,5 +196,51 @@ public class KataTest {
         boolean actual = testKata.follow(testUser);
         assertFalse(actual);
         assertFalse(currentUser.Followers.contains(testUser));
+    }
+
+    @Test
+    void testUnfollowWillRemoveUserFromFollowers() {
+        User testUser = new User(null, null, "testUser");
+        boolean followed = testKata.follow(testUser);
+        assertTrue(followed);
+        assertTrue(currentUser.Followers.contains(testUser));
+        boolean actual = testKata.unfollow(testUser);
+        assertTrue(actual);
+        assertFalse(currentUser.Followers.contains(testUser));
+    }
+
+    @Test
+    void testUnfollowWillNotRemoveUserFromFollowersIfNotFollowed() {
+        User testUser = new User(null, null, "testUser");
+        boolean actual = testKata.unfollow(testUser);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testUnfollowUserIsNullReturnsFalse() {
+        User testUser = null;
+        boolean actual = testKata.unfollow(testUser);
+        assertFalse(actual);
+    }
+
+    @Test
+    void testUnfollowUserAndViewCurrentUserTimeLineNoLongerContainsUnfollowedUsersPost() {
+        User testUser = new User(null, new ArrayList<Post>(10), "testUser");
+        Post testPost = new Post(testUser, new Date(), "test");
+        testUser.Posts.add(testPost);
+
+        boolean followed = testKata.follow(testUser);
+        assertTrue(followed);
+        assertTrue(currentUser.Followers.contains(testUser));
+
+        ArrayList<Post> timelinePosts = testKata.currentUserTimeLinePosts();
+        assertTrue(timelinePosts.contains(testPost));
+
+        boolean unfollowed = testKata.unfollow(testUser);
+        assertTrue(unfollowed);
+        assertFalse(currentUser.Followers.contains(testUser));
+
+        timelinePosts = testKata.currentUserTimeLinePosts();
+        assertFalse(timelinePosts.contains(testPost));
     }
 }

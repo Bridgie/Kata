@@ -121,7 +121,7 @@ public class Kata {
         return printTimeLine(userPosts);
     }
 
-    public boolean viewCurrentUserTimeLine() {
+    public ArrayList<Post> currentUserTimeLinePosts() {
         ArrayList<Post> timeLinePosts = new  ArrayList<>(10);
         ArrayList<User> followers = this.CurrentUser.Followers;
         for (User follower:
@@ -130,6 +130,11 @@ public class Kata {
         }
         timeLinePosts.addAll(this.CurrentUser.Posts);
         Collections.sort(timeLinePosts);
+        return timeLinePosts;
+    }
+
+    public boolean viewCurrentUserTimeLine() {
+        ArrayList<Post> timeLinePosts = currentUserTimeLinePosts();
         return printTimeLine(timeLinePosts);
     }
 
@@ -181,5 +186,13 @@ public class Kata {
         }
         this.CurrentUser.Followers.add(user);
         return true;
+    }
+
+    public boolean unfollow(User user) {
+        if (this.CurrentUser.Followers.contains(user)) {
+            this.CurrentUser.Followers.remove(user);
+            return true;
+        }
+        return false;
     }
 }
