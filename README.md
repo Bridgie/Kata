@@ -58,3 +58,24 @@ You can follow another user by searching for them using their username and if th
 
 ## Thanks!
 For reading and enjoy, let me know if there are any questions or if I missed something.
+
+
+## Additional Features
+Feature: Unfollow
+	Scenario: Alice unfollows Bob.
+	Given Alice has followed Bob,
+		And Bob has published "Good game though."
+		And Alice can see Bob's message on her wall.
+	When Alice unfollows Bob,
+	Then Alice should not see Bob's message on her wall anymore.
+Feature: Block
+	Scenario: Alice blocks bob.
+	Given Alice has followed Bob,
+		And Bob has followed Alice,
+		And Bob has published "I really don't like this Alice person"
+		And Alice can see Bob's hateful message mentioning her.
+	When Alice blocks Bob,
+	Then Bob can no longer see Alice's posts,
+		And Alice can no longer see Bob's posts, 
+		And Bob can not follow Alice again.
+
